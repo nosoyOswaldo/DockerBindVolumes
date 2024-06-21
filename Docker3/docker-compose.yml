@@ -1,0 +1,31 @@
+version: "3"
+
+services:
+  mariadb:
+    container_name: mariadb
+    image: mariadb:latest
+    ports:
+      - "3306:3306"
+    volumes:
+      - mariadb-data:/var/lib/mysql
+    environment:
+      - MARIADB_ROOT_PASSWORD=your_root_password
+      - MARIADB_DATABASE=your_database_name
+      - MARIADB_USER=tunombre
+      - MARIADB_PASSWORD=tunombrepor2
+
+  phpmyadmin:
+    container_name: phpmyadmin
+    image: phpmyadmin/phpmyadmin:latest
+    ports:
+      - "8085:80"
+    environment:
+      - PMA_HOST=mariadb
+      - PMA_USER=root
+      - PMA_PASSWORD=your_root_password
+    depends_on:
+      - mariadb
+
+volumes:
+  mariadb-data:
+      external: true
